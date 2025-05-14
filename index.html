@@ -62,11 +62,6 @@
       word-break: break-all;
     }
 
-    .counter {
-      margin-top: 10px;
-      font-size: 13px;
-      color: #aaa;
-    }
   </style>
 </head>
 <body>
@@ -77,21 +72,12 @@
     <input type="text" id="longUrl" placeholder="Enter long URL..." />
     <button onclick="shorten()">Shorten</button>
     <div id="output"></div>
-    <div class="counter" id="counterInfo"></div>
   </div>
 
   <script>
     function decodeToken() {
       let encoded = "YzAzOTRmZDkyMGNhZDA2MjBjZDdiMTk4OWNiYTBjNmU2ZGJjNjRiZA==";
       return atob(encoded);
-    }
-
-    function updateCounterDisplay() {
-      const count = parseInt(localStorage.getItem('shortCount') || 0);
-      const limit = 1000;
-      const left = limit - count;
-      document.getElementById('counterInfo').textContent = 
-        `Links shortened: ${count} | Remaining: ${left}`;
     }
 
     async function shorten() {
@@ -114,15 +100,10 @@
 
       if (data.link) {
         output.innerHTML = `Shortened: <a href="${data.link}" target="_blank" style="color:#0ff">${data.link}</a>`;
-        const currentCount = parseInt(localStorage.getItem('shortCount') || 0) + 1;
-        localStorage.setItem('shortCount', currentCount);
-        updateCounterDisplay();
       } else {
         output.textContent = "Error: " + (data.description || "Failed to shorten link.");
       }
     }
-
-    updateCounterDisplay();
 
     // Background Animation (Lines + Dots)
     const canvas = document.getElementById('bgCanvas');
